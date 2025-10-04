@@ -20,6 +20,10 @@ namespace eyeNotice {
         }
 
         public void Start(MarrowBody body) {
+            if (Player.GetPhysicsRig().marrowEntity == body.Entity || body.Entity.name.Contains("Rig") || body._rigidbody.isKinematic) {
+                Destroy(this);
+                return;
+            }
             _pointer = new GameObject($"Pointer ({name})").transform;
             _pointer.transform.parent = transform;
             Body = body;
