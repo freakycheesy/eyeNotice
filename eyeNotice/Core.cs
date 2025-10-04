@@ -17,7 +17,6 @@ namespace eyeNotice
         public static Transform PlayerHead => Player.GetPhysicsRig()?.m_head;
         public override void OnInitializeMelon() {
             LoggerInstance.Msg("Initialized.");
-            ClassInjector.RegisterTypeInIl2Cpp<NoticableBehaviour>();
         }
     }
     

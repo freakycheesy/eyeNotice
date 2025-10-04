@@ -11,7 +11,7 @@ namespace eyeNotice.Patches {
         [HarmonyPostfix]
         public static void Awake(MarrowBody __instance) {
             MelonLogger.Msg("Attempt Awake Patch");
-            __instance.gameObject.AddComponent<NoticableBehaviour>().Start(__instance);
+            __instance.gameObject.AddComponent<NoticableBehaviour>().Begin(__instance);
             MelonLogger.Msg("Patched Successful");
         }
     }

@@ -19,7 +19,7 @@ namespace eyeNotice {
             get; private set;
         }
 
-        public void Start(MarrowBody body) {
+        public void Begin(MarrowBody body) {
             Body = body;
             if (Player.GetPhysicsRig().marrowEntity == body.Entity || body.Entity.name.Contains("Rig") || body._rigidbody.isKinematic) {
                 DestroyObject(this);
@@ -30,12 +30,20 @@ namespace eyeNotice {
         }
 
         public void Update() {
-            if(!Core.PlayerHead) return;
-            _pointer.LookAt(Player.Head.position);
-            bool hasHit = Physics.Raycast(transform.position, _pointer.eulerAngles, out var hit, EyeNoticeImplementation.MaxDistFromHead, -1, QueryTriggerInteraction.Ignore);
-            if (hasHit && hit.transform == Core.PlayerHead && !Core.Noticables.Contains(this))
-                Core.Noticables.Add(this);
-            else Core.Noticables.Remove(this);
+            try {
+
+                if (!Core.PlayerHead && !_pointer)
+                    return;
+                _pointer.LookAt(Player.Head.position);
+                bool hasHit = Physics.Raycast(transform.position, _pointer.eulerAngles, out var hit, EyeNoticeImplementation.MaxDistFromHead, -1, QueryTriggerInteraction.Ignore);
+                if (hasHit && hit.transform == Core.PlayerHead && !Core.Noticables.Contains(this))
+                    Core.Noticables.Add(this);
+                else if(Core.Noticables.Contains(this))
+                    Core.Noticables.Remove(this);
+            }
+            catch (Exception e){
+                MelonLogger.Error($"Error in:\n({GetType().FullName}), Message:\n(Source: {e.Source}, StackTrace: {e.StackTrace}, Message: {e.Message})", e);
+            }
         }
     }
 }
