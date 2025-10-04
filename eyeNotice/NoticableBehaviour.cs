@@ -20,13 +20,13 @@ namespace eyeNotice {
         }
 
         public void Start(MarrowBody body) {
+            Body = body;
             if (Player.GetPhysicsRig().marrowEntity == body.Entity || body.Entity.name.Contains("Rig") || body._rigidbody.isKinematic) {
-                Destroy(this);
+                DestroyObject(this);
                 return;
             }
             _pointer = new GameObject($"Pointer ({name})").transform;
             _pointer.transform.parent = transform;
-            Body = body;
         }
 
         public void Update() {
